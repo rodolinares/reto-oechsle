@@ -7,7 +7,7 @@
   </mat-toolbar-row>
 </mat-toolbar>
 
-<form [formGroup]="group">
+<form [formGroup]="group" (ngSubmit)="onSubmit()">
   <mat-form-field>
     <input matInput placeholder="Nombre" formControlName="firstName" />
     <mat-error *ngIf="group.get('firstName').hasError('required')">Este campo es requerido</mat-error>
@@ -27,9 +27,9 @@
       (click)="datepicker.open()"
       readonly
     />
-    <mat-datepicker #datepicker></mat-datepicker>
+    <mat-datepicker #datepicker startView="multi-year"></mat-datepicker>
     <mat-error *ngIf="group.get('birthDate').hasError('required')">Este campo es requerido</mat-error>
   </mat-form-field>
 </form>
 
-<button mat-flat-button color="primary" class="btn-submit">Crear</button>
+<button mat-flat-button color="primary" class="btn-submit" (click)="onSubmit()">Crear</button>

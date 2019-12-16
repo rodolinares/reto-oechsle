@@ -5,16 +5,22 @@
     <button mat-flat-button routerLink="/create-user"><mat-icon>add</mat-icon> Agregar usuario</button>
   </mat-toolbar-row>
   <mat-toolbar-row>
-    Edad promedio: {{ average | number: '1.0-0' }} | Desviacion Estandar: {{ stDev | number }}
+    Edad promedio: {{ avg | number: '1.0-0' }} | Desviacion Estandar: {{ stDev | number }}
   </mat-toolbar-row>
 </mat-toolbar>
 
 <mat-card style="margin: 1rem;">
-  <mat-list>
-    <mat-list-item *ngFor="let user of users">
-      <span>{{ user.firstName }} {{ user.lastName }}</span>
-      <span class="filler"></span>
-      <button mat-flat-button color="primary">Detalles</button>
-    </mat-list-item>
-  </mat-list>
+  <ng-container *ngIf="users.length > 0; else emptyData">
+    <mat-list>
+      <mat-list-item *ngFor="let user of users">
+        <span>{{ user.firstName }} {{ user.lastName }}</span>
+        <span class="filler"></span>
+        <button mat-flat-button color="primary">Detalles</button>
+        <button mat-flat-button color="warn" style="margin-left: 1rem;" (click)="deleteUser(user._id)">Eliminar</button>
+      </mat-list-item>
+    </mat-list>
+  </ng-container>
+  <ng-template #emptyData>
+    No existe ningún usuario en la base de datos
+  </ng-template>
 </mat-card>

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import DATA from '../data';
+import * as moment from 'moment';
+
+import { FirestoreService, User } from '../services/firestore.service';
 
 @Component({
   selector: 'app-list-users',
@@ -7,30 +9,54 @@ import DATA from '../data';
   styleUrls: ['./list-users.component.scss']
 })
 export class ListUsersComponent implements OnInit {
-  average = 0;
+  avg = 0;
   stDev = 0;
-  sumSqDist = 0;
-  users = DATA;
+  users: User[] = [];
 
-  constructor() {}
+  constructor(private firestore: FirestoreService) {}
 
-  async ngOnInit() {
-    // Calcular edades
-    this.users.forEach(user => {
-      const birthDate: Date = user.birthDate;
-      const now = new Date();
-      const age = now.getUTCFullYear() - birthDate.getUTCFullYear();
-      user.age = age;
-      this.average += age;
-    });
+  deleteUser(id: string) {
+    this.firestore
+      .deleteUser(id)
+      .then(() => {
+        this.users = this.users.filter(x => x._id !== id);
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }
 
-    // Obtener el promedio
-    this.average /= this.users.length;
+  ngOnInit() {
+    this.firestore.listUsers().subscribe(
+      next => {
+        this.users = next.docs.map(x => {
+          const now = moment();
+          const birthDate = moment.unix(x.get('birthDate').seconds);
+          const age = now.diff(birthDate, 'years');
+          this.avg += age;
 
-    this.users.forEach(user => {
-      this.sumSqDist += Math.pow(Math.abs(user.age - this.average), 2);
-    });
+          return {
+            _id: x.id,
+            age,
+            birthDate: birthDate.toDate(),
+            firstName: x.get('firstName'),
+            lastName: x.get('lastName')
+          };
+        });
 
-    this.stDev = Math.sqrt(this.sumSqDist / this.users.length);
+        // Calculo del promedio
+        this.avg /= this.users.length;
+
+        // Calculo de la desviacion estandar
+        this.users.forEach(user => {
+          this.stDev += Math.pow(Math.abs(user.age - this.avg), 2);
+        });
+
+        this.stDev = Math.sqrt(this.stDev / this.users.length);
+      },
+      error => {
+        console.error(error);
+      }
+    );
   }
 }
