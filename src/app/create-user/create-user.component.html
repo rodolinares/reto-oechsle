@@ -1,0 +1,35 @@
+<mat-toolbar color="primary" class="toolbar">
+  <mat-toolbar-row>
+    <button mat-icon-button routerLink="/list-users">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span style="margin-left: 1rem;">Reto Oechsle - Crear usuario</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<form [formGroup]="group">
+  <mat-form-field>
+    <input matInput placeholder="Nombre" formControlName="firstName" />
+    <mat-error *ngIf="group.get('firstName').hasError('required')">Este campo es requerido</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Apellido" formControlName="lastName" />
+    <mat-error *ngIf="group.get('lastName').hasError('required')">Este campo es requerido</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Fecha de nacimiento"
+      formControlName="birthDate"
+      [matDatepicker]="datepicker"
+      (click)="datepicker.open()"
+      readonly
+    />
+    <mat-datepicker #datepicker></mat-datepicker>
+    <mat-error *ngIf="group.get('birthDate').hasError('required')">Este campo es requerido</mat-error>
+  </mat-form-field>
+</form>
+
+<button mat-flat-button color="primary" class="btn-submit">Crear</button>

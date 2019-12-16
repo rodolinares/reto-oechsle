@@ -1,0 +1,21 @@
+.toolbar {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+}
+
+form > * {
+  width: 100%;
+}
+
+.btn-submit {
+  margin-right: 1rem;
+  float: right;
+}
