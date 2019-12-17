@@ -10,17 +10,29 @@
 </mat-toolbar>
 
 <mat-card style="margin: 1rem;">
-  <ng-container *ngIf="users.length > 0; else emptyData">
-    <mat-list>
-      <mat-list-item *ngFor="let user of users">
-        <span>{{ user.firstName }} {{ user.lastName }}</span>
-        <span class="filler"></span>
-        <button mat-flat-button color="primary">Detalles</button>
-        <button mat-flat-button color="warn" style="margin-left: 1rem;" (click)="deleteUser(user._id)">Eliminar</button>
-      </mat-list-item>
-    </mat-list>
+  <ng-container *ngIf="loading; else notLoading">
+    <mat-spinner style="margin: auto;"></mat-spinner>
   </ng-container>
-  <ng-template #emptyData>
-    No existe ningún usuario en la base de datos
+  <ng-template #notLoading>
+    <ng-container *ngIf="users.length > 0; else noData">
+      <mat-list>
+        <mat-list-item *ngFor="let user of users">
+          <span>{{ user.firstName }} {{ user.lastName }}</span>
+          <span class="filler"></span>
+          <button mat-flat-button color="primary">Detalles</button>
+          <button
+            mat-flat-button
+            color="warn"
+            style="margin-left: 1rem;"
+            (click)="deleteUser(user.firstName, user.lastName, user._id)"
+          >
+            Eliminar
+          </button>
+        </mat-list-item>
+      </mat-list>
+    </ng-container>
+    <ng-template #noData>
+      No existe ningún usuario en la base de datos
+    </ng-template>
   </ng-template>
 </mat-card>

@@ -13,6 +13,7 @@ import { FirestoreService, User } from '../services/firestore.service';
 })
 export class CreateUserComponent implements OnInit {
   group: FormGroup;
+  loading = false;
 
   constructor(public dialog: MatDialog, private builder: FormBuilder, private firestore: FirestoreService) {}
 
@@ -26,6 +27,7 @@ export class CreateUserComponent implements OnInit {
 
   onSubmit() {
     if (this.group.valid) {
+      this.loading = true;
       const raw = this.group.getRawValue();
       const user: User = {
         birthDate: moment(raw.birthDate).toDate(),
@@ -36,11 +38,13 @@ export class CreateUserComponent implements OnInit {
       this.firestore
         .createUser(user)
         .then(_ => {
-          this.openDialog('Éxito', 'El usuario ha sido creado satisfactoriamente.');
+          this.loading = false;
+          this.openDialog('¡Éxito!', 'El usuario ha sido creado satisfactoriamente.');
         })
         .catch(err => {
-          this.openDialog('Error', 'Ocurrió un problema al intentar crear el usuario.', true);
+          this.loading = false;
           console.error(err);
+          this.openDialog('¡Error!', 'Ocurrió un problema al intentar crear el usuario.', true);
         });
     } else {
       this.group.markAllAsTouched();

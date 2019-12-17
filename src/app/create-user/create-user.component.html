@@ -7,29 +7,34 @@
   </mat-toolbar-row>
 </mat-toolbar>
 
-<form [formGroup]="group" (ngSubmit)="onSubmit()">
-  <mat-form-field>
-    <input matInput placeholder="Nombre" formControlName="firstName" />
-    <mat-error *ngIf="group.get('firstName').hasError('required')">Este campo es requerido</mat-error>
-  </mat-form-field>
+<ng-container *ngIf="loading; else notLoading">
+  <mat-spinner style="margin: 2rem auto;"></mat-spinner>
+</ng-container>
+<ng-template #notLoading>
+  <form [formGroup]="group" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <input matInput placeholder="Nombre" formControlName="firstName" />
+      <mat-error *ngIf="group.get('firstName').hasError('required')">Este campo es requerido</mat-error>
+    </mat-form-field>
 
-  <mat-form-field>
-    <input matInput placeholder="Apellido" formControlName="lastName" />
-    <mat-error *ngIf="group.get('lastName').hasError('required')">Este campo es requerido</mat-error>
-  </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Apellido" formControlName="lastName" />
+      <mat-error *ngIf="group.get('lastName').hasError('required')">Este campo es requerido</mat-error>
+    </mat-form-field>
 
-  <mat-form-field>
-    <input
-      matInput
-      placeholder="Fecha de nacimiento"
-      formControlName="birthDate"
-      [matDatepicker]="datepicker"
-      (click)="datepicker.open()"
-      readonly
-    />
-    <mat-datepicker #datepicker startView="multi-year"></mat-datepicker>
-    <mat-error *ngIf="group.get('birthDate').hasError('required')">Este campo es requerido</mat-error>
-  </mat-form-field>
-</form>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Fecha de nacimiento"
+        formControlName="birthDate"
+        [matDatepicker]="datepicker"
+        (click)="datepicker.open()"
+        readonly
+      />
+      <mat-datepicker #datepicker startView="multi-year"></mat-datepicker>
+      <mat-error *ngIf="group.get('birthDate').hasError('required')">Este campo es requerido</mat-error>
+    </mat-form-field>
+  </form>
 
-<button mat-flat-button color="primary" class="btn-submit" (click)="onSubmit()">Crear</button>
+  <button mat-flat-button color="primary" class="btn-submit" (click)="onSubmit()">Crear</button>
+</ng-template>

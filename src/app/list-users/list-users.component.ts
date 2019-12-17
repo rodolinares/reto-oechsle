@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
 
+import { ListUsersDialogComponent } from '../dialogs/list-users-dialog/list-users-dialog.component';
 import { FirestoreService, User } from '../services/firestore.service';
 
 @Component({
@@ -9,26 +11,27 @@ import { FirestoreService, User } from '../services/firestore.service';
   styleUrls: ['./list-users.component.scss']
 })
 export class ListUsersComponent implements OnInit {
-  avg = 0;
-  stDev = 0;
-  users: User[] = [];
+  avg: number;
+  loading = true;
+  stDev: number;
+  users: User[];
 
-  constructor(private firestore: FirestoreService) {}
+  constructor(public dialog: MatDialog, private firestore: FirestoreService) {}
 
-  deleteUser(id: string) {
-    this.firestore
-      .deleteUser(id)
-      .then(() => {
-        this.listUsers();
-      })
-      .catch(err => {
-        console.error(err);
-      });
+  deleteUser(firstName: string, lastName: string, id: string) {
+    this.openDialog('¡Atención!', `¿Desea eliminar el usuario '${firstName} ${lastName}'?`, id);
+    localStorage.setItem('firstName', firstName);
+    localStorage.setItem('lastName', lastName);
   }
 
   listUsers() {
+    this.loading = true;
+
     this.firestore.listUsers().subscribe(
       next => {
+        this.avg = 0;
+        this.stDev = 0;
+
         this.users = next.docs.map(x => {
           const now = moment();
           const birthDate = moment.unix(x.get('birthDate').seconds);
@@ -53,14 +56,39 @@ export class ListUsersComponent implements OnInit {
         });
 
         this.stDev = Math.sqrt(this.stDev / this.users.length);
+
+        this.loading = false;
       },
       error => {
         console.error(error);
+        this.openDialog('¡Error!', 'Ocurrió un problema al intentar listar los usuarios.');
+        this.loading = false;
       }
     );
   }
 
   ngOnInit() {
     this.listUsers();
+  }
+
+  openDialog(title: string, content: string, id = null) {
+    const dialogRef = this.dialog.open(ListUsersDialogComponent, { data: { title, content, id }, width: '300px' });
+
+    dialogRef.afterClosed().subscribe(response => {
+      if (response === 'success') {
+        this.listUsers();
+        this.openDialog(
+          '¡Éxito!',
+          'Se eliminó satisfactoriamente al usuario ' +
+            `'${localStorage.getItem('firstName')} ${localStorage.getItem('lastName')}'.`
+        );
+      } else if (response === 'error') {
+        this.openDialog(
+          '¡Error!',
+          'Ocurrió un problema al intentar eliminar al usuario ' +
+            `'${localStorage.getItem('firstName')} ${localStorage.getItem('lastName')}'.`
+        );
+      }
+    });
   }
 }

@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>{{ data.title }}</h1>
+<div mat-dialog-content>{{ data.content }}</div>
+<div mat-dialog-actions align="end">
+  <ng-container *ngIf="data.id; else notDeleting">
+    <button mat-flat-button color="primary" mat-dialog-close>Cancelar</button>
+    <button mat-flat-button color="warn" (click)="onClose(data.id)">Ok</button>
+  </ng-container>
+  <ng-template #notDeleting>
+    <button mat-flat-button color="primary" mat-dialog-close>Ok</button>
+  </ng-template>
+</div>

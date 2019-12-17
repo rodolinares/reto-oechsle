@@ -12,6 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,10 +22,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { CreateUserDialogComponent } from './dialogs/create-user-dialog/create-user-dialog.component';
+import { ListUsersDialogComponent } from './dialogs/list-users-dialog/list-users-dialog.component';
 import { ListUsersComponent } from './list-users/list-users.component';
 
 @NgModule({
-  declarations: [AppComponent, CreateUserComponent, ListUsersComponent, CreateUserDialogComponent],
+  declarations: [
+    AppComponent,
+    CreateUserComponent,
+    ListUsersComponent,
+    CreateUserDialogComponent,
+    ListUsersDialogComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -41,9 +49,10 @@ import { ListUsersComponent } from './list-users/list-users.component';
     MatIconModule,
     MatInputModule,
     MatListModule,
+    MatProgressSpinnerModule,
     MatToolbarModule
   ],
-  entryComponents: [CreateUserDialogComponent],
+  entryComponents: [CreateUserDialogComponent, ListUsersDialogComponent],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'es-PE' }],
   bootstrap: [AppComponent]
 })
