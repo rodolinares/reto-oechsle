@@ -1,27 +1,45 @@
 # RetoOechsle
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.20.
+Aplicación web para gestionar una base de datos de usuarios y poder ver el promedio y la desviación estandar de sus edades.
 
-## Development server
+## Demo
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+https://reto-oechsle.firebaseapp.com
 
-## Code scaffolding
+## Tecnologias usadas
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### [Angular 8](https://angular.io/)
 
-## Build
+Angular es un _framework_ de aplicaciones web de código abierto basado en TypeScript, liderado por el equipo de Angular en Google y por una comunidad de individuos y corporaciones. Angular es una reescritura completa del mismo equipo que construyó AngularJS.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+### [SASS (SCSS)](https://sass-lang.com/)
 
-## Running unit tests
+Sass es el lenguaje de extensión CSS de grado profesional más maduro, estable y potente del mundo.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### [Firebase](https://firebase.google.com/)
 
-## Running end-to-end tests
+Firebase es la plataforma móvil de Google que te ayuda a desarrollar rápidamente aplicaciones de alta calidad y a hacer crecer tu negocio.
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+## Instalación y ejecución
 
-## Further help
+### Requisitos
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+- [Node.js](https://nodejs.org/) - Un entorno multiplataforma de código abierto, que ejecuta código JavaScript fuera de un navegador.
+- [npm](https://docs.npmjs.com/cli/install) - Un gestor de paquetes para el lenguaje de programación JavaScript.
+- [Angular CLI](https://cli.angular.io/) - Una interfaz de línea de comandos para Angular.
+
+### Dependencias
+
+Para instalar las dependencias necesarias ejecute el siguiente comando:
+
+```sh
+$ npm install
+```
+
+### Build
+
+Para construir y servir la aplicación, ejecute `npm start` y vaya a `http://localhost:4200/`. La aplicación se reconstruirá a partir de los cambios detectados en los archivos.
+
+```sh
+$ npm start
+```
