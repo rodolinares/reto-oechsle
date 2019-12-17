@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
 
+import { CreateUserDialogComponent } from '../dialogs/create-user-dialog/create-user-dialog.component';
 import { FirestoreService, User } from '../services/firestore.service';
 
 @Component({
@@ -13,7 +14,7 @@ import { FirestoreService, User } from '../services/firestore.service';
 export class CreateUserComponent implements OnInit {
   group: FormGroup;
 
-  constructor(private builder: FormBuilder, private firestore: FirestoreService, private router: Router) {}
+  constructor(public dialog: MatDialog, private builder: FormBuilder, private firestore: FirestoreService) {}
 
   ngOnInit() {
     this.group = this.builder.group({
@@ -35,13 +36,18 @@ export class CreateUserComponent implements OnInit {
       this.firestore
         .createUser(user)
         .then(_ => {
-          this.router.navigateByUrl('/list-users');
+          this.openDialog('Éxito', 'El usuario ha sido creado satisfactoriamente.');
         })
         .catch(err => {
+          this.openDialog('Error', 'Ocurrió un problema al intentar crear el usuario.', true);
           console.error(err);
         });
     } else {
       this.group.markAllAsTouched();
     }
+  }
+
+  openDialog(title: string, content: string, error = false) {
+    this.dialog.open(CreateUserDialogComponent, { data: { title, content, error }, width: '300px' });
   }
 }

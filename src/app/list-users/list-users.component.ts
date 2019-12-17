@@ -19,14 +19,14 @@ export class ListUsersComponent implements OnInit {
     this.firestore
       .deleteUser(id)
       .then(() => {
-        this.users = this.users.filter(x => x._id !== id);
+        this.listUsers();
       })
       .catch(err => {
         console.error(err);
       });
   }
 
-  ngOnInit() {
+  listUsers() {
     this.firestore.listUsers().subscribe(
       next => {
         this.users = next.docs.map(x => {
@@ -58,5 +58,9 @@ export class ListUsersComponent implements OnInit {
         console.error(error);
       }
     );
+  }
+
+  ngOnInit() {
+    this.listUsers();
   }
 }

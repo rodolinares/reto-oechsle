@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -19,10 +20,11 @@ import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CreateUserComponent } from './create-user/create-user.component';
+import { CreateUserDialogComponent } from './dialogs/create-user-dialog/create-user-dialog.component';
 import { ListUsersComponent } from './list-users/list-users.component';
 
 @NgModule({
-  declarations: [AppComponent, CreateUserComponent, ListUsersComponent],
+  declarations: [AppComponent, CreateUserComponent, ListUsersComponent, CreateUserDialogComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -34,12 +36,14 @@ import { ListUsersComponent } from './list-users/list-users.component';
     MatButtonModule,
     MatCardModule,
     MatDatepickerModule,
+    MatDialogModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
     MatListModule,
     MatToolbarModule
   ],
+  entryComponents: [CreateUserDialogComponent],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'es-PE' }],
   bootstrap: [AppComponent]
 })
