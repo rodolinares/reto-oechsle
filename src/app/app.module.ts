@@ -1,4 +1,6 @@
-import { NgModule } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localePe from '@angular/common/locales/es-PE';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -24,6 +26,9 @@ import { CreateUserComponent } from './create-user/create-user.component';
 import { CreateUserDialogComponent } from './dialogs/create-user-dialog/create-user-dialog.component';
 import { ListUsersDialogComponent } from './dialogs/list-users-dialog/list-users-dialog.component';
 import { ListUsersComponent } from './list-users/list-users.component';
+import { UserDetailsComponent } from './user-details/user-details.component';
+
+registerLocaleData(localePe);
 
 @NgModule({
   declarations: [
@@ -31,7 +36,8 @@ import { ListUsersComponent } from './list-users/list-users.component';
     CreateUserComponent,
     ListUsersComponent,
     CreateUserDialogComponent,
-    ListUsersDialogComponent
+    ListUsersDialogComponent,
+    UserDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +59,7 @@ import { ListUsersComponent } from './list-users/list-users.component';
     MatToolbarModule
   ],
   entryComponents: [CreateUserDialogComponent, ListUsersDialogComponent],
-  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'es-PE' }],
+  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'es-PE' }, { provide: LOCALE_ID, useValue: 'es-PE' }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

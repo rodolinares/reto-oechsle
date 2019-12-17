@@ -29,4 +29,11 @@ export class FirestoreService {
   listUsers() {
     return this.firestore.collection('users').get();
   }
+
+  readUser(id: string) {
+    return this.firestore
+      .collection('users')
+      .doc(id)
+      .get();
+  }
 }

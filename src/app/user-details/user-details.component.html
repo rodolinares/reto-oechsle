@@ -1,0 +1,26 @@
+<mat-toolbar color="primary" class="toolbar">
+  <mat-toolbar-row>
+    <button mat-icon-button routerLink="/list-users">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span style="margin-left: 1rem;">Reto Oechsle - Detalles de usuario</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-card style="margin: 1rem;">
+  <ng-container *ngIf="loading; else notLoading">
+    <mat-spinner style="margin: auto;"></mat-spinner>
+  </ng-container>
+  <ng-template #notLoading>
+    <mat-card-header>
+      <mat-card-title>{{ user.firstName }} {{ user.lastName }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item>ID: {{ user._id }}</mat-list-item>
+        <mat-list-item>Edad: {{ user.age }}</mat-list-item>
+        <mat-list-item>Fecha de nacimiento: {{ user.birthDate | date: 'longDate' }}</mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </ng-template>
+</mat-card>

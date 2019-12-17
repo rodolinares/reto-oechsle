@@ -19,7 +19,7 @@
         <mat-list-item *ngFor="let user of users">
           <span>{{ user.firstName }} {{ user.lastName }}</span>
           <span class="filler"></span>
-          <button mat-flat-button color="primary">Detalles</button>
+          <button mat-flat-button color="primary" [routerLink]="['/user-details', user._id]">Detalles</button>
           <button
             mat-flat-button
             color="warn"

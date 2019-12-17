@@ -28,11 +28,11 @@ export class ListUsersComponent implements OnInit {
     this.loading = true;
 
     this.firestore.listUsers().subscribe(
-      next => {
+      response => {
         this.avg = 0;
         this.stDev = 0;
 
-        this.users = next.docs.map(x => {
+        this.users = response.docs.map(x => {
           const now = moment();
           const birthDate = moment.unix(x.get('birthDate').seconds);
           const age = now.diff(birthDate, 'years');
